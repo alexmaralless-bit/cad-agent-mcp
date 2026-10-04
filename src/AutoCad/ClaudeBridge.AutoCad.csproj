@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!--
+      AutoCAD 2020 (release R23.1) targets .NET Framework 4.7. We compile to net48
+      so the assembly loads cleanly under both 4.7 and 4.8 runtimes that AutoCAD ships.
+    -->
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ClaudeBridge.AutoCad</RootNamespace>
+    <AssemblyName>ClaudeBridge.AutoCad</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AutoCadRoot Condition="'$(AutoCadRoot)' == ''">C:\Program Files\Autodesk\AutoCAD 2020</AutoCadRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Built-in .NET Framework assemblies used directly by SnapshotCommand. -->
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Newtonsoft.Json (Json.NET) — chosen over System.Text.Json deliberately:
+      AutoCAD 2020's AppDomain pre-loads its own versions of System.Memory /
+      System.Buffers / etc, which conflict with System.Text.Json 8.x's
+      transitive dep graph and cause `TypeInitializationException` on first
+      JsonSerializer use. Newtonsoft.Json is a single self-contained DLL on
+      net48 — zero transitive deps, zero binding-redirect drama. It's the
+      canonical JSON library for AutoCAD .NET plugins.
+    -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      AutoCAD managed Object ARX trio. CopyLocal=false (Private=false) is the
+      standard ARX rule: don't shadow Autodesk DLLs into the output folder,
+      since at runtime AutoCAD always loads them from its own bin directory
+      and a stale copy in our output would confuse version resolution.
+    -->
+    <Reference Include="accoremgd">
+      <HintPath>$(AutoCadRoot)\accoremgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>$(AutoCadRoot)\acdbmgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>$(AutoCadRoot)\acmgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

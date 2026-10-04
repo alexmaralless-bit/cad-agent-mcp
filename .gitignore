@@ -1,0 +1,34 @@
+# Секреты
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# .NET
+bin/
+obj/
+artifacts/
+.dotnet_home/
+.appdata/
+.nuget/
+*.user
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# CAD lock-файлы и локальные чертежи
+*.dwl
+*.dwl2
+*.bak
+*.sv$
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
