@@ -131,6 +131,10 @@ args = ['<путь-к-репозиторию>\mcp-server\autocad\dist\index.js']
 
 C# / .NET Framework 4.8 и .NET 6, AutoCAD .NET API, nanoCAD .NET API (Teigha), Node.js, TypeScript, MCP SDK, zod, PowerShell.
 
+## Автор
+
+Telegram-канал [@sitimlab](https://t.me/sitimlab) · сайт [sitimlab.ru](https://sitimlab.ru/?utm_source=github&utm_medium=profile)
+
 ## Лицензия
 
 MIT, см. [LICENSE](LICENSE). Снимки интерфейса AutoCAD в `docs/01-komandnaya-stroka.jpg` и `docs/02-glaza-agenta.jpg` под MIT не подпадают: они распространяются по CC BY-SA 4.0 (источник — Wikimedia Commons, см. подпись под изображениями).
